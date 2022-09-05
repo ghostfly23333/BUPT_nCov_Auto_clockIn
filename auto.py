@@ -120,11 +120,11 @@ try:
 	# 发送请求，设置cookies
 	headers = { "User-Agent": USER_AGENT }
 	params = { "service": SERVICE }
-	responce = session.get(url=LOGIN_URL, headers=headers, params=params)
-	logging.debug('Get: %s %s', LOGIN_URL, responce)
+	response = session.get(url=LOGIN_URL, headers=headers, params=params)
+	logging.debug('Get: %s %s', LOGIN_URL, response)
 
 	# 获取execution
-	html = etree.HTML(responce.content)
+	html = etree.HTML(response.content)
 	execution = html.xpath(EXECUTION_XPATH)[0]
 	logging.debug('execution: %s', execution)
 
@@ -140,8 +140,8 @@ try:
 	logging.debug(data)
 
 	# 登录到疫情防控通
-	responce = session.post(url=LOGIN_URL, headers=headers, data=data)
-	logging.debug('Post %s, responce: %s', LOGIN_URL, responce)
+	response = session.post(url=LOGIN_URL, headers=headers, data=data)
+	logging.debug('Post %s, response: %s', LOGIN_URL, response)
 
 
 	logging.info('Authorize successed')
@@ -162,17 +162,17 @@ try:
 	logging.debug(data)
 
 	# 填报
-	responce = session.post(url=FORM_URL, headers=headers, data=data)
-	msg = responce.json()['m']
-	logging.debug('Post %s, responce: %s', FORM_URL, responce)
-	logging.info('Responce: %s', responce)
+	response = session.post(url=FORM_URL, headers=headers, data=data)
+	msg = response.json()['m']
+	logging.debug('Post %s, response: %s', FORM_URL, response)
+	logging.info('response: %s', response)
 	logging.info('Result: %s', msg)
 
 	# pushdeer model
 	key = os.environ.get('PUSHDEER_KEY')
 	if key != None:
 		pushdeer = PushDeer(pushkey=key)
-		if responce.status_code != 200 and responce.status_code != 202:
+		if response.status_code != 200 and response.status_code != 202:
 			pushdeer.send_text('[BUPT_nCov] 自动填报失败')
 		else:
 			pushdeer.send_text('[BUPT_nCov] ' + msg)
