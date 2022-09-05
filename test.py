@@ -8,4 +8,3 @@ os.environ['CITY'] = ''     # 市
 os.environ['SFZX'] = '0'
 
 os.system('python auto.py')
-
