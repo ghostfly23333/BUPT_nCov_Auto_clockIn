@@ -163,7 +163,7 @@ try:
 
 	# 填报
 	responce = session.post(url=FORM_URL, headers=headers, data=data)
-	msg = response.json()['m']
+	msg = responce.json()['m']
 	logging.debug('Post %s, responce: %s', FORM_URL, responce)
 	logging.info('Responce: %s', responce)
 	logging.info('Result: %s', msg)
@@ -172,7 +172,7 @@ try:
 	key = os.environ.get('PUSHDEER_KEY')
 	if key != None:
 		pushdeer = PushDeer(pushkey=key)
-		if response.status_code != 200 and response.status_code != 202:
+		if responce.status_code != 200 and responce.status_code != 202:
 			pushdeer.send_text('[BUPT_nCov] 自动填报失败')
 		else:
 			pushdeer.send_text('[BUPT_nCov] ' + msg)
