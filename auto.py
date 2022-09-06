@@ -171,8 +171,9 @@ try:
 	logging.info('Result: %s', msg)
 
 	# pushdeer model
-	key = os.getenv('PUSHDEER_KEY', None)
-	if key != None or len(key) != 0:
+	key = os.environ['PUSHDEER_KEY']
+	# key = os.getenv('PUSHDEER_KEY', None)
+	if key != None and len(key) != 0:
 		pushdeer = PushDeer(pushkey = key)
 		if response.status_code != 200 and response.status_code != 202:
 			pushdeer.send_text('[BUPT_nCov] 自动填报失败')
