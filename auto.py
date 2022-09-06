@@ -171,8 +171,8 @@ try:
 	logging.info('Result: %s', msg)
 
 	# pushdeer model
-	key = os.environ['PUSHDEER_KEY']
-	# key = os.getenv('PUSHDEER_KEY', None)
+	#key = os.environ['PUSHDEER_KEY']
+	key = os.getenv('PUSHDEER_KEY', None)
 	if key != None and len(key) != 0:
 		pushdeer = PushDeer(pushkey = key)
 		if response.status_code != 200 and response.status_code != 202:
